@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. STATISTISCHE LOGIK
     function computeBreaks(data, method) {
         const vals = data.features
-            .map(f => parseFloat(getProp(f.properties, ['tasa_promedio', 'tasa', 'valor'])) || 0)
+            .map(f => parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0)
             .sort((a, b) => a - b);
         const min = vals[0], max = vals[vals.length - 1];
         if (method === 'equal') {
@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         geojsonLayer = L.geoJSON(data, {
             style: (f) => ({
-                fillColor: colorSchemes[document.getElementById('paletteSelect').value][getColorIndex(parseFloat(getProp(f.properties, ['tasa_promedio', 'tasa', 'valor'])) || 0, currentBreaks)],
+                fillColor: colorSchemes[document.getElementById('paletteSelect').value][getColorIndex(parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0, currentBreaks)],
                 weight: 1.2, color: 'white', fillOpacity: 0.8
             }),
             onEachFeature: (f, layer) => {
-                const n = getProp(f.properties, ['nombre', 'name', 'departamento']);
-                const t = parseFloat(getProp(f.properties, ['tasa_promedio', 'tasa', 'valor'])) || 0;
+                const n = getProp(f.properties, ['nombre', 'name', 'Kantone']);
+                const t = parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0;
                 
                 layer.bindTooltip(`<b>${n}</b><br>Valor: ${t}`, { sticky: true });
 
@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         geojsonLayer.resetStyle(e.target);
                     },
                     click: () => {
-                        document.getElementById('detailNome').innerHTML = `<b>Unidad:</b> ${n}`;
-                        document.getElementById('detailTaxa').innerHTML = `<b>Valor:</b> ${t}%`;
+                        document.getElementById('detailNome').innerHTML = `<b>Verwaltung:</b> ${n}`;
+                        document.getElementById('detailTaxa').innerHTML = `<b>Wert:</b> ${t}%`;
                     }
                 });
             }
