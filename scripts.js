@@ -19,10 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     let currentPalette = colorSchemes.blues;
 
-    const getProp = (p, keys) => {
-        const found = Object.keys(p).find(k => keys.includes(k.toLowerCase()));
-        return found ? p[found] : null;
-    };
+   const getProp = (p, keys) => {
+   
+    const lowerKeys = keys.map(k => k.toLowerCase());
+    const foundKey = Object.keys(p).find(k => lowerKeys.includes(k.toLowerCase()));
+    return foundKey ? p[foundKey] : null;
+};
 
     // 2. STATISTISCHE LOGIK
     function computeBreaks(data, method) {
@@ -160,19 +162,31 @@ function updateLegend() {
     };
 
     document.getElementById('labelSelect').onchange = (e) => {
-        const sel = e.target.value;
-        if (!sel) return;
-        geojsonLayer.eachLayer(layer => {
-            if (getProp(layer.feature.properties, ['nombre', 'name', 'NAME_1']) === sel) {
-                map.fitBounds(layer.getBounds(), { padding: [100, 100], maxZoom: 10 });
-                const v = getProp(layer.feature.properties, ['tasa_promedio', 'Tax_rate', 'Wert']) || 0;
-                document.getElementById('detailNAME_1').innerHTML = `<b>Verwaltung:</b> ${sel}`;
-                document.getElementById('detailTax_rate').innerHTML = `<b>Wert:</b> ${v}%`;
-                layer.setStyle({ weight: 4, color: '#FFD700' });
-                layer.openTooltip();
-            }
-        });
-    };
+    const sel = e.target.value;
+    if (!sel) return;
+
+    geojsonLayer.resetStyle();
+
+    geojsonLayer.eachLayer(layer => {
+        const nombre = getProp(layer.feature.properties, ['nombre', 'name', 'NAME_1']);
+        
+        if (nombre === sel) {
+            map.fitBounds(layer.getBounds(), { padding: [100, 100], maxZoom: 10 });
+            
+            const v = getProp(layer.feature.properties, ['tasa_promedio', 'Tax_rate', 'Wert']) || 0;
+            
+         
+            const elName = document.getElementById('detailNAME_1');
+            const elTax = document.getElementById('detailTax_rate');
+            
+            if (elName) elName.innerHTML = `<b>Verwaltung:</b> ${sel}`;
+            if (elTax) elTax.innerHTML = `<b>Wert:</b> ${v}%`;
+            
+            layer.setStyle({ weight: 4, color: '#FFD700', fillOpacity: 0.7 });
+            layer.openTooltip();
+        }
+    });
+};
 
     document.getElementById('classificationSelect').onchange = () => renderMap(currentData);
     document.getElementById('paletteSelect').onchange = (e) => { 
