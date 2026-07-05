@@ -97,7 +97,7 @@ function updateLegend() {
         lControl.addTo(map);
     }
 
-        let html = `<div>ESCALA DE VALORES</div>
+        let html = `<div>Farbskala</div>
                 <div class="legend-container">`;
 
     //die Schleife erzeugt die 5 Farbblöcke
