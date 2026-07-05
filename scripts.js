@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 weight: 1.2, color: 'white', fillOpacity: 0.8
             }),
             onEachFeature: (f, layer) => {
-                const n = getProp(f.properties, ['nombre', 'name', 'Kantone', 'NAME_1']);
+                const n = getProp(f.properties, ['nombre', 'name', 'NAME_1']);
                 const t = parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0;
                 
                 layer.bindTooltip(`<b>${n}</b><br>Wert: ${t}`, { sticky: true });
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         geojsonLayer.resetStyle(e.target);
                     },
                     click: () => {
-                        document.getElementById('detailNome').innerHTML = `<b>Verwaltung:</b> ${n}`;
+                        document.getElementById('detailNAME_1').innerHTML = `<b>Verwaltung:</b> ${n}`;
                         document.getElementById('detailTax_rate').innerHTML = `<b>Wert:</b> ${t}%`;
                     }
                 });
@@ -154,7 +154,7 @@ function updateLegend() {
             map.fitBounds(geojsonLayer.getBounds(), { padding: [30, 30] });
             const select = document.getElementById('labelSelect');
             select.innerHTML = '<option value="">Kanton auswählen...</option>';
-            const nombres = data.features.map(f => getProp(f.properties, ['nombre', 'name', 'Kantone','NAME_1'])).filter(n => n).sort();
+            const nombres = data.features.map(f => getProp(f.properties, ['nombre', 'name', 'NAME_1'])).filter(n => n).sort();
             nombres.forEach(name => select.add(new Option(name, name)));
         });
     };
@@ -163,10 +163,10 @@ function updateLegend() {
         const sel = e.target.value;
         if (!sel) return;
         geojsonLayer.eachLayer(layer => {
-            if (getProp(layer.feature.properties, ['nombre', 'name', 'Kantone','NAME_1']) === sel) {
+            if (getProp(layer.feature.properties, ['nombre', 'name', 'NAME_1']) === sel) {
                 map.fitBounds(layer.getBounds(), { padding: [100, 100], maxZoom: 10 });
                 const v = getProp(layer.feature.properties, ['tasa_promedio', 'Tax_rate', 'Wert']) || 0;
-                document.getElementById('detailNome').innerHTML = `<b>Verwaltung:</b> ${sel}`;
+                document.getElementById('detailNAME_1').innerHTML = `<b>Verwaltung:</b> ${sel}`;
                 document.getElementById('detailTax_rate').innerHTML = `<b>Wert:</b> ${v}%`;
                 layer.setStyle({ weight: 4, color: '#FFD700' });
                 layer.openTooltip();
