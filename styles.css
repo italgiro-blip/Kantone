@@ -1,0 +1,168 @@
+/* 1. RESET UND BASIS */
+body, html { 
+    margin: 0; padding: 0; 
+    height: 100vh; width: 100vw; 
+    font-family: 'Roboto Condensed', sans-serif; 
+    background: #111; 
+    overflow: hidden; 
+}
+
+#map { 
+    position: absolute; top: 0; bottom: 0; left: 0; right: 0; 
+    z-index: 0; 
+}
+
+/* 2. HEADER (LOGO UND TITEL) */
+.map-overlay-header { 
+    position: absolute; top: 0; width: 100%; 
+    z-index: 1000; display: flex; justify-content: center; 
+    pointer-events: none; 
+}
+
+.header-content { 
+    background: rgba(18, 18, 18, 0.9); 
+    padding: 10px 30px; 
+    border-radius: 0 0 15px 15px; 
+    border-bottom: 2px solid #2A3180; 
+    display: flex; align-items: center; gap: 15px;
+    pointer-events: auto; 
+}
+
+.map-logo { 
+    height: 40px; width: auto; 
+}
+
+#mainTitle { 
+    margin: 0; font-size: 18px; 
+    color: #D9D9D9; text-transform: uppercase; 
+    letter-spacing: 1px;
+}
+
+/* 3. KONTROLLPANEL (LINKS) */
+.controls { 
+    position: absolute; top: 80px; left: 20px; 
+    z-index: 1000; background: rgba(25, 25, 25, 0.95); 
+    padding: 20px; width: 260px; 
+    border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    color: white; 
+}
+
+.map-button { 
+    width: 100%; background: #2A3180; color: white; 
+    border: none; padding: 12px; border-radius: 6px; 
+    font-weight: bold; cursor: pointer; transition: 0.3s; 
+    text-transform: uppercase;
+}
+
+.map-button:hover { background: #4a54e1; transform: scale(1.02); }
+
+.separator { height: 1px; background: rgba(255,255,255,0.1); margin: 15px 0; }
+
+label { 
+    font-size: 10px; color: #aaa; display: flex; 
+    flex-direction: column; gap: 5px; margin-top: 15px; 
+    font-weight: bold; text-transform: uppercase;
+}
+
+select { 
+    background: #333; color: #fff; border: 1px solid #444; 
+    padding: 8px; border-radius: 4px; cursor: pointer;
+}
+
+.info-card { 
+    margin-top: 15px; padding: 12px; 
+    background: rgba(42, 49, 128, 0.2); 
+    border-left: 4px solid #2A3180; border-radius: 4px;
+}
+
+.info-card p { margin: 5px 0; font-size: 14px; color: #D9D9D9; }
+
+/* 4. SEITENBILDER (RECHTS) */
+.side-images {
+    position: absolute; top: 80px; right: 20px;
+    z-index: 1000; display: flex; flex-direction: column; gap: 15px;
+}
+
+.side-image {
+    width: 120px; height: auto; border-radius: 8px;
+    border: 2px solid #2A3180; background: #fff; padding: 3px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+}
+
+.side-image:hover { transform: scale(1.1) rotate(2deg); }
+
+/* --- HORIZONTALE LEGENDE (FARBSKALA-BALKEN) --- */
+.legend-horizontal { 
+    background: rgba(10, 10, 10, 0.85) !important; /* Un poco más de transparencia para elegancia */
+    padding: 10px 15px !important; 
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    bottom: 30px; /* Ajusta según tu diseño */
+    min-width: 280px !important;: 280px !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* Titel der Skala (WERTEBEREICH) */
+.legend-horizontal div:first-child {
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    color: #BBBBBB !important; /* Gris claro para que sea legible */
+    margin-bottom: 10px !important;
+    font-weight: bold;
+}
+
+/* Behälter für Farbblöcke */
+.legend-container { 
+    display: flex !important; 
+    gap: 2px; /* Gap mínimo para que parezca una barra estirada continua */
+    width: 100%; 
+}
+
+.legend-item { 
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Der eigentliche Farbblock */
+.legend-color { 
+    height: 14px; /* Más fina */
+    width: 100%;
+    margin-bottom: 4px; 
+    border: 1px solid rgba(255,255,255,0.1); 
+}
+
+/* Text der numerischen Bereiche */
+.legend-text { 
+    color: #FFFFFF; 
+    font-size: 11px; 
+    font-family: 'Monospace', sans-serif; /* Estilo técnico */
+}
+
+/* --- METRISCHER MASSSTAB (LEAFLET-MASSSTAB) --- */
+.leaflet-control-scale-line { 
+    background: rgba(10, 10, 10, 0.7) !important; 
+    color: #FFFFFF !important; 
+    border: 1.5px solid #2A3180 !important; 
+    border-top: none !important;
+    font-size: 10px !important;
+    font-weight: bold;
+    padding: 2px 5px !important;
+}
+
+/* 6. RESPONSIVITÄT (MOBIL) */
+@media (max-width: 768px) {
+    .controls { 
+        top: auto; bottom: 10px; left: 10px; right: 10px; 
+        width: auto; max-height: 40vh; overflow-y: auto; 
+    }
+    .map-overlay-header, .side-images { display: none; }
+    .legend-horizontal { margin-bottom: 42vh !important; }
+}

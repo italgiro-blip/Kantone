@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTERAKTIVE KANTONSKARTE DER SCHWEIZ | Pro</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="map-overlay-header">
+        <div class="header-content">
+            <img src="ruta/a/tu/logotipo.png" alt="Logotipo AECA" class="map-logo">
+            <h1 id="mainTitle">DATENKLASSIFIKATION UND HYPOTHETISCHE RATENVISUALISIERUNG</h1>
+        </div>
+    </header>
+
+    <aside class="controls">
+        <h3 style="color: #D9D9D9; font-size: 14px; letter-spacing: 1px; margin-bottom: 15px;">VISUELLE PARAMETER</h3>
+        <button type="button" id="btnCargarGeoJSON" class="map-button">LAYER IMPORTIEREN</button>
+        <div class="separator"></div>
+
+        <label>HINTERGRUNDKARTE
+            <select id="baseMapSelect">
+    <option value="dark">Dunkelmodus (CartoDB)</option>
+    <option value="streets">OpenStreetMap</option>
+    <option value="satellite">Satellit (Esri)</option>
+</select>
+        </label>
+
+        <label>STATISTISCHE METHODE
+            <select id="classificationSelect">
+                <option value="jenks">Gruppen optimieren (Jenks)</option>
+                <option value="equal">Gleiche Intervalle (Uniform)</option>
+                <option value="quartiles">Frequenzverteilung (Quartile)</option>
+            </select>
+        </label>
+
+        <label>FARBSCHEMA
+    <select id="paletteSelect">
+        <option value="blues" selected>Blaustufen</option>
+        <option value="reds">Rotstufen</option>
+        <option value="purples">Lilastufen</option>
+        <option value="greens">Grünstufen</option>
+    </select>
+        </label>
+
+        <label>VERWALTUNGSEINHEIT
+            <select id="labelSelect">
+                <option value="">Daten werden geladen...</option>
+            </select>
+        </label>
+
+        <div id="infoBox" class="info-card">
+            <p id="detailNome"><b>Verwaltung:</b> --</p>
+            <p id="detailTaxa"><b>Wert:</b> --</p>
+        </div>
+    </aside>
+
+    <div class="side-images">
+        <img src="ruta/a/tu/Seitenbild_1.jpg" alt="Seitenbild 1" class="side-image">
+        <img src="ruta/a/tu/Seitenbild_2.jpg" alt="Seitenbild 2" class="side-image">
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
