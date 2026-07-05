@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const n = getProp(f.properties, ['nombre', 'name', 'Kantone']);
                 const t = parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0;
                 
-                layer.bindTooltip(`<b>${n}</b><br>Valor: ${t}`, { sticky: true });
+                layer.bindTooltip(`<b>${n}</b><br>Wert: ${t}`, { sticky: true });
 
                 layer.on({
                     mouseover: (e) => {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     click: () => {
                         document.getElementById('detailNome').innerHTML = `<b>Verwaltung:</b> ${n}`;
-                        document.getElementById('detailTaxa').innerHTML = `<b>Wert:</b> ${t}%`;
+                        document.getElementById('detailTax_rate').innerHTML = `<b>Wert:</b> ${t}%`;
                     }
                 });
             }
