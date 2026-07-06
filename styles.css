@@ -3,7 +3,7 @@ body, html {
     margin: 0; padding: 0; 
     height: 100vh; width: 100vw; 
     font-family: 'Roboto Condensed', sans-serif; 
-    background: #111; 
+    background: #b3b1b1; 
     overflow: hidden; 
 }
 
@@ -23,7 +23,7 @@ body, html {
     background: rgba(18, 18, 18, 0.9); 
     padding: 10px 30px; 
     border-radius: 0 0 15px 15px; 
-    border-bottom: 2px solid #2A3180; 
+    border-bottom: 2px solid #FF0000; 
     display: flex; align-items: center; gap: 15px;
     pointer-events: auto; 
 }
@@ -49,13 +49,13 @@ body, html {
 }
 
 .map-button { 
-    width: 100%; background: #2A3180; color: white; 
+    width: 100%; background: #FF0000; color: white; 
     border: none; padding: 12px; border-radius: 6px; 
     font-weight: bold; cursor: pointer; transition: 0.3s; 
     text-transform: uppercase;
 }
 
-.map-button:hover { background: #4a54e1; transform: scale(1.02); }
+.map-button:hover { background: #FF0000; transform: scale(1.02); }
 
 .separator { height: 1px; background: rgba(255,255,255,0.1); margin: 15px 0; }
 
@@ -73,7 +73,7 @@ select {
 .info-card { 
     margin-top: 15px; padding: 12px; 
     background: rgba(42, 49, 128, 0.2); 
-    border-left: 4px solid #2A3180; border-radius: 4px;
+    border-left: 4px solid #FF0000; border-radius: 4px;
 }
 
 .info-card p { margin: 5px 0; font-size: 14px; color: #D9D9D9; }
