@@ -96,7 +96,7 @@ select {
 /* --- HORIZONTALE LEGENDE (FARBSKALA-BALKEN) --- */
 .legend-horizontal { 
     background: rgba(10, 10, 10, 0.85) !important; /* Un poco más de transparencia para elegancia */
-    padding:10px 12px 12px 12px; 
+    padding:8px 12px ; 
     border-radius: 4px;
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
     display: flex ;
