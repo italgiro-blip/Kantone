@@ -130,10 +130,6 @@ function updateLegend() {
     container.innerHTML = html;
 }
 
-    // Wir schließen den Container und injizieren ihn
-    container.innerHTML = html + '</div>';
-}
-
     // SYNCHRONISATIONSFUNKTIONEN - KARTE ZU LEISTE
     window.resaltarBloqueLegenda = (index) => {
         const block = document.getElementById(`leg-block-${index}`);
