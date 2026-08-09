@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     click: () => {
                         document.getElementById('detailNAME_1').innerHTML = `<b>Verwaltung:</b> ${n}`;
-                        document.getElementById('detailTax_rate').innerHTML = `<b>Wert:</b> ${t}%`;
+                        document.getElementById('detailTax_rate').innerHTML = `<b>Wert:</b> ${t}`;
                     }
                 });
             }
