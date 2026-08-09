@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     // 1. KARTE UND BASISKARTEN
     const baseLayers = {
@@ -19,12 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     let currentPalette = colorSchemes.blues;
 
-   const getProp = (p, keys) => {
-   
-    const lowerKeys = keys.map(k => k.toLowerCase());
-    const foundKey = Object.keys(p).find(k => lowerKeys.includes(k.toLowerCase()));
-    return foundKey ? p[foundKey] : null;
-};
+    const getProp = (p, keys) => {
+        const lowerKeys = keys.map(k => k.toLowerCase());
+        const foundKey = Object.keys(p).find(k => lowerKeys.includes(k.toLowerCase()));
+        return foundKey ? p[foundKey] : null;
+    };
 
     // 2. STATISTISCHE LOGIK
     function computeBreaks(data, method) {
@@ -66,11 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 layer.on({
                     mouseover: (e) => {
                         const index = getColorIndex(t, currentBreaks);
-                        resaltarBloqueLegenda(index); // Acción en la barra
+                        resaltarBloqueLegenda(index);
                         layer.setStyle({ weight: 3, color: '#FFD700', fillOpacity: 1 });
                     },
                     mouseout: (e) => {
-                        resetBloqueLegenda(); // Reset barra
+                        resetBloqueLegenda();
                         geojsonLayer.resetStyle(e.target);
                     },
                     click: () => {
@@ -83,51 +81,45 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLegend();
     }
 
+    // 4. LEGENDE UND FARBSKALA - REFINIERTE VERSION
+    function updateLegend() {
+        let container = document.querySelector('.legend-horizontal');
+        
+        if (!container) {
+            container = L.DomUtil.create('div', 'legend-horizontal');
+            const lControl = L.control({ position: 'bottomright' });
+            lControl.onAdd = () => container;
+            lControl.addTo(map);
+        }
 
+        let html = `<div>Farbskala</div>
+                    <div class="legend-container">`;
 
+        for (let i = 0; i < 5; i++) {
+            const color = currentPalette[i];
+            html += `
+            <div class="legend-item" id="leg-block-${i}">
+                <div class="legend-color" style="background:${color};"></div>
+            </div>`;
+        }
+        
+        html += `</div>`;
 
+        // Línea inferior de etiquetas corregida sin posición absoluta
+        html += `<div style="display: flex; justify-content: space-between; width: 100%; margin-top: 6px;">`;
+        for (let i = 0; i <= 5; i++) {
+            const val = currentBreaks[i] !== undefined ? currentBreaks[i].toFixed(1) : '';
+            html += `<span style="font-size: 10px; color: #ccc;">${val}</span>`;
+        }
+        html += `</div>`;
 
-  capaz que el problema esta en el js // 4. LEGENDE UND FARBSKALA - REFINIERTE VERSION
-function updateLegend() {
-    let container = document.querySelector('.legend-horizontal');
-    
-    // Wenn der Container nicht existiert, erstellen wir ihn und fügen ihn der Map hinzu
-    if (!container) {
-        container = L.DomUtil.create('div', 'legend-horizontal');
-        const lControl = L.control({ position: 'bottomright' });
-        lControl.onAdd = () => container;
-        lControl.addTo(map);
-    }
-
-        let html = `<div>Farbskala</div>
-                <div class="legend-container">`;
-
-    //die Schleife erzeugt die 5 Farbblöcke
-    for (let i = 0; i < 5; i++) {
-        const low = currentBreaks[i];
-        const high = currentBreaks[i+1];
-        const color = currentPalette[i];
-
-        html += `
-        <div class="legend-item" id="leg-block-${i}">
-            <div class="legend-color" style="background:${color};"></div>
-            
-            <span class="legend-text">
-                ${low.toFixed(1)}
-            </span>
-
-            ${i === 4 ? `
-            <span class="legend-text" style="position: absolute; right: -15px; bottom: 0;">
-                ${high.toFixed(1)}
-            </span>` : ''}
-        </div>`;
-    }
+        container.innerHTML = html;
+    }
 
     // SYNCHRONISATIONSFUNKTIONEN - KARTE ZU LEISTE
     window.resaltarBloqueLegenda = (index) => {
         const block = document.getElementById(`leg-block-${index}`);
         if (block) {
-            // Resalte sutil: Borde dorado y opacidad total
             block.firstElementChild.style.borderColor = "#FFD700";
             block.firstElementChild.style.borderWidth = "2px";
             block.firstElementChild.style.zIndex = "10";
@@ -158,31 +150,30 @@ function updateLegend() {
     };
 
     document.getElementById('labelSelect').onchange = (e) => {
-    const sel = e.target.value;
-    if (!sel) return;
+        const sel = e.target.value;
+        if (!sel) return;
 
-    geojsonLayer.resetStyle();
+        geojsonLayer.resetStyle();
 
-    geojsonLayer.eachLayer(layer => {
-        const nombre = getProp(layer.feature.properties, ['nombre', 'name', 'NAME_1']);
-        
-        if (nombre === sel) {
-            map.fitBounds(layer.getBounds(), { padding: [100, 100], maxZoom: 10 });
+        geojsonLayer.eachLayer(layer => {
+            const nombre = getProp(layer.feature.properties, ['nombre', 'name', 'NAME_1']);
             
-            const v = getProp(layer.feature.properties, ['tasa_promedio', 'Tax_rate', 'Wert']) || 0;
-            
-         
-            const elName = document.getElementById('detailNAME_1');
-            const elTax = document.getElementById('detailTax_rate');
-            
-            if (elName) elName.innerHTML = `<b>Verwaltung:</b> ${sel}`;
-            if (elTax) elTax.innerHTML = `<b>Wert:</b> ${v}%`;
-            
-            layer.setStyle({ weight: 4, color: '#FFD700', fillOpacity: 0.7 });
-            layer.openTooltip();
-        }
-    });
-};
+            if (nombre === sel) {
+                map.fitBounds(layer.getBounds(), { padding: [100, 100], maxZoom: 10 });
+                
+                const v = getProp(layer.feature.properties, ['tasa_promedio', 'Tax_rate', 'Wert']) || 0;
+                
+                const elName = document.getElementById('detailNAME_1');
+                const elTax = document.getElementById('detailTax_rate');
+                
+                if (elName) elName.innerHTML = `<b>Verwaltung:</b> ${sel}`;
+                if (elTax) elTax.innerHTML = `<b>Wert:</b> ${v}%`;
+                
+                layer.setStyle({ weight: 4, color: '#FFD700', fillOpacity: 0.7 });
+                layer.openTooltip();
+            }
+        });
+    };
 
     document.getElementById('classificationSelect').onchange = () => renderMap(currentData);
     document.getElementById('paletteSelect').onchange = (e) => { 
