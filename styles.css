@@ -95,7 +95,7 @@ select {
 
 /* --- HORIZONTALE LEGENDE (FARBSKALA-BALKEN) --- */
 .legend-horizontal { 
-    background: rgba(10, 10, 10, 0.85) !important; /* Un poco más de transparencia para elegancia */
+    background: rgba(10, 10, 10, 0.85) !; /* Un poco más de transparencia para elegancia */
     padding:8px 12px ; 
     border-radius: 4px;
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
@@ -111,18 +111,18 @@ select {
 
 /* Titel der Skala (WERTEBEREICH) */
 .legend-horizontal div:first-child {
-    font-size: 12px !important;
-    width: 100% !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1.5px !important;
-    color: #BBBBBB !important; /* Gris claro para que sea legible */
-    margin-bottom: 10px !important;
+    font-size: 12px ;
+    width: 100% !;
+    text-transform: uppercase !;
+    letter-spacing: 1.5px !;
+    color: #BBBBBB !; /* Gris claro para que sea legible */
+    margin-bottom: 10px !;
     font-weight: bold;
 }
 
 /* Behälter für Farbblöcke */
 .legend-container { 
-    display: flex !important; 
+    display: flex !; 
     gap: 2px; /* Gap mínimo para que parezca una barra estirada continua */
     width: 100%; 
     box-sizing: border-box;
@@ -153,13 +153,13 @@ select {
 
 /* --- METRISCHER MASSSTAB (LEAFLET-MASSSTAB) --- */
 .leaflet-control-scale-line { 
-    background: rgba(10, 10, 10, 0.7) !important; 
-    color: #FFFFFF !important; 
-    border: 1.5px solid #2A3180 !important; 
-    border-top: none !important;
-    font-size: 10px !important;
+    background: rgba(10, 10, 10, 0.7) !; 
+    color: #FFFFFF !; 
+    border: 1.5px solid #2A3180 !; 
+    border-top: none !;
+    font-size: 10px !;
     font-weight: bold;
-    padding: 2px 5px !important;
+    padding: 2px 5px !;
 }
 
 /* 6. RESPONSIVITÄT (MOBIL) */
@@ -169,5 +169,5 @@ select {
         width: auto; max-height: 40vh; overflow-y: auto; 
     }
     .map-overlay-header, .side-images { display: none; }
-    .legend-horizontal { margin-bottom: 42vh !important; }
+    .legend-horizontal { margin-bottom: 42vh !; }
 }
