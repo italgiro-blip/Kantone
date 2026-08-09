@@ -87,48 +87,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // 4. LEGENDE UND FARBSKALA - REFINIERTE VERSION
+  capaz que el problema esta en el js // 4. LEGENDE UND FARBSKALA - REFINIERTE VERSION
 function updateLegend() {
-    let container = document.querySelector('.legend-horizontal');
-    
-    // Wenn der Container nicht existiert, erstellen wir ihn und fügen ihn der Map hinzu
-    if (!container) {
-        container = L.DomUtil.create('div', 'legend-horizontal');
-        const lControl = L.control({ position: 'bottomright' });
-        lControl.onAdd = () => container;
-        lControl.addTo(map);
-    }
+    let container = document.querySelector('.legend-horizontal');
+    
+    // Wenn der Container nicht existiert, erstellen wir ihn und fügen ihn der Map hinzu
+    if (!container) {
+        container = L.DomUtil.create('div', 'legend-horizontal');
+        const lControl = L.control({ position: 'bottomright' });
+        lControl.onAdd = () => container;
+        lControl.addTo(map);
+    }
 
-    let html = `<div>Farbskala</div>
-                <div class="legend-container">`;
+        let html = `<div>Farbskala</div>
+                <div class="legend-container">`;
 
-    //die Schleife erzeugt die 5 Farbblöcke
-    for (let i = 0; i < 5; i++) {
-        const low = currentBreaks[i];
-        const high = currentBreaks[i+1];
-        const color = currentPalette[i];
+    //die Schleife erzeugt die 5 Farbblöcke
+    for (let i = 0; i < 5; i++) {
+        const low = currentBreaks[i];
+        const high = currentBreaks[i+1];
+        const color = currentPalette[i];
 
-        html += `
-        <div class="legend-item" id="leg-block-${i}">
-            <div class="legend-color" style="background:${color};"></div>
-            
-            <span class="legend-text">
-                ${low.toFixed(1)}
-            </span>
-        </div>`;
-    }
+        html += `
+        <div class="legend-item" id="leg-block-${i}">
+            <div class="legend-color" style="background:${color};"></div>
+            
+            <span class="legend-text">
+                ${low.toFixed(1)}
+            </span>
 
-    html += `</div>`; // Cierra legend-container
-
-    // CORRECCIÓN: Si necesitas mostrar el valor final (high) del último bloque, 
-    // lo ideal es agregarlo al final como un elemento extra o dejar que la estructura lo contenga,
-    // pero sin "position: absolute". Si tus 'currentBreaks' tienen 6 valores (0 a 5), 
-    // la manera limpia de cerrar la escala con el último número es la siguiente:
-    
-    // (Opcional si manejas los números individuales por bloque, pero quitando el absolute se frena el error).
-    
-    container.innerHTML = html;
-}
+            ${i === 4 ? `
+            <span class="legend-text" style="position: absolute; right: -15px; bottom: 0;">
+                ${high.toFixed(1)}
+            </span>` : ''}
+        </div>`;
+    }
 
     // SYNCHRONISATIONSFUNKTIONEN - KARTE ZU LEISTE
     window.resaltarBloqueLegenda = (index) => {
