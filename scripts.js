@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const map = L.map('map', { zoomControl: false, layers: [baseLayers.dark] }).setView([46.8009866002, 8.2297845701], 8);
+    
+    // Barra de escala configurada de forma idéntica
     L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
 
     let geojsonLayer, currentData, currentBreaks = [];
@@ -105,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         html += `</div>`;
 
-        // Línea inferior de etiquetas corregida sin posición absoluta
         html += `<div style="display: flex; justify-content: space-between; width: 100%; margin-top: 6px;">`;
         for (let i = 0; i <= 5; i++) {
             const val = currentBreaks[i] !== undefined ? currentBreaks[i].toFixed(1) : '';
