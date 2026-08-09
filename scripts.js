@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const elTax = document.getElementById('detailTax_rate');
                 
                 if (elName) elName.innerHTML = `<b>Verwaltung:</b> ${sel}`;
-                if (elTax) elTax.innerHTML = `<b>Wert:</b> ${v}%`;
+                if (elTax) elTax.innerHTML = `<b>Wert:</b> ${v}`;
                 
                 layer.setStyle({ weight: 4, color: '#FFD700', fillOpacity: 0.7 });
                 layer.openTooltip();
