@@ -94,57 +94,53 @@ select {
 .side-image:hover { transform: scale(1.1) rotate(2deg); }
 
 /* --- HORIZONTALE LEGENDE (FARBSKALA-BALKEN) --- */
-.legend-horizontal { 
-    background: rgba(10, 10, 10, 0.85) !; /* Un poco más de transparencia para elegancia */
-    padding:8px 12px ; 
+.legend-horizontal {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    padding: 12px 15px !important; 
     border-radius: 4px;
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    display: flex ;
-    flex-direction: column;
-    align-items: center;
-    bottom: 30px; /* Ajusta según tu diseño */
-    width:260px;
-    max-width: 260px;
-   
-    border: 1px solid rgba(255,255,255,0.1);
-    box-sizing: border-box;
-    overflow: hidden;
-    position: relative;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    bottom: 30px; 
+    width: 450px !important; /* <--- Modifica este valor si quieres hacerla más larga o corta */
+    max-width: 450px !important; /* <--- Debe coincidir con el width */
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    box-sizing: border-box !important; 
+    overflow: hidden !important; /* Evita que cualquier elemento salga de los márgenes */
 }
 
-/* Titel der Skala (WERTEBEREICH) */
 .legend-horizontal div:first-child {
-    font-size: 12px ;
-    width: 100% !;
-    text-transform: uppercase !;
-    letter-spacing: 1.5px !;
-    color: #BBBBBB !; /* Gris claro para que sea legible */
-    margin-bottom: 10px !;
+    font-size: 11px !important;
+    width: 100% !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    color: #BBBBBB !important;
+    margin-bottom: 6px !important;
     font-weight: bold;
+    text-align: center;
 }
 
-/* Behälter für Farbblöcke */
 .legend-container { 
-    display: flex !; 
-    gap: 2px; /* Gap mínimo para que parezca una barra estirada continua */
-    width: 100%; 
-    box-sizing: border-box;
+    display: flex !important; 
+    gap: 3px !important; 
+    width: 100% !important; 
+    box-sizing: border-box !important;
 }
 
 .legend-item { 
-    flex: 1; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 0;
+    flex: 1 !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    min-width: 0 !important; 
 }
 
-/* Der eigentliche Farbblock */
-.legend-color { 
-    height: 14px; /* Más fina */
-    width: 100%;
-    margin-bottom: 4px; 
-    border: 1px solid rgba(255,255,255,0.1); 
+.legend-color {
+    width: 100% !important;
+    height: 14px !important;
+    border-radius: 2px;
+    border: 0.5px solid rgba(255,255,255,0.4);
 }
 
 /* Text der numerischen Bereiche */
