@@ -99,7 +99,7 @@ function updateLegend() {
         lControl.addTo(map);
     }
 
-        let html = `<div>Farbskala</div>
+    let html = `<div>Farbskala</div>
                 <div class="legend-container">`;
 
     //die Schleife erzeugt die 5 Farbblöcke
@@ -115,13 +115,20 @@ function updateLegend() {
             <span class="legend-text">
                 ${low.toFixed(1)}
             </span>
-
-            ${i === 4 ? `
-            <span class="legend-text" style="position: absolute; right: -15px; bottom: 0;">
-                ${high.toFixed(1)}
-            </span>` : ''}
         </div>`;
     }
+
+    html += `</div>`; // Cierra legend-container
+
+    // CORRECCIÓN: Si necesitas mostrar el valor final (high) del último bloque, 
+    // lo ideal es agregarlo al final como un elemento extra o dejar que la estructura lo contenga,
+    // pero sin "position: absolute". Si tus 'currentBreaks' tienen 6 valores (0 a 5), 
+    // la manera limpia de cerrar la escala con el último número es la siguiente:
+    
+    // (Opcional si manejas los números individuales por bloque, pero quitando el absolute se frena el error).
+    
+    container.innerHTML = html;
+}
 
     // Wir schließen den Container und injizieren ihn
     container.innerHTML = html + '</div>';
