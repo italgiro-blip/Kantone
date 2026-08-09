@@ -81,37 +81,40 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLegend();
     }
 
-    function addLegend() {
-    if (legend) map.removeControl(legend);
-    legend = L.control({position: 'bottomright'});
-    legend.onAdd = () => {
-        const div = L.DomUtil.create('div', 'legend-horizontal');
+    // 4. LEGENDE UND FARBSKALA - REFINIERTE VERSION
+    function updateLegend() {
+        let container = document.querySelector('.legend-horizontal');
         
-        // Título en alemán idéntico en estructura al portugués
-        let html = '<div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #BBBBBB; margin-bottom: 6px; font-weight: bold; text-align: center; width: 100%;">Farbskala</div>';
-        
-        // Contenedor de los bloques de color
-        html += '<div class="legend-container" style="display: flex; gap: 4px; width: 100%; box-sizing: border-box;">';
-        for (let i = 0; i < currentBreaks.length - 1; i++) {
+        if (!container) {
+            container = L.DomUtil.create('div', 'legend-horizontal');
+            const lControl = L.control({ position: 'bottomright' });
+            lControl.onAdd = () => container;
+            lControl.addTo(map);
+        }
+
+        let html = `<div>Farbskala</div>
+                    <div class="legend-container">`;
+
+        for (let i = 0; i < 5; i++) {
+            const color = currentPalette[i];
             html += `
-                <div class="legend-item" id="leg-block-${i}" onmouseover="highlightRange(${currentBreaks[i]}, ${currentBreaks[i+1]})" onmouseout="resetHighlight()" style="flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; cursor: pointer; transition: 0.3s ease;">
-                    <div class="legend-color" style="background:${currentPalette[i]}; width: 100%; height: 12px; border-radius: 4px; margin-bottom: 4px; border: 1px solid rgba(255,255,255,0.3);"></div>
-                </div>`;
+            <div class="legend-item" id="leg-block-${i}">
+                <div class="legend-color" style="background:${color};"></div>
+            </div>`;
         }
-        html += '</div>';
+        
+        html += `</div>`;
 
-        // Línea inferior con los números distribuidos uniformemente
-        html += '<div style="display: flex; justify-content: space-between; width: 100%; margin-top: 6px; box-sizing: border-box;">';
-        for (let i = 0; i < currentBreaks.length; i++) {
-            html += `<span class="legend-text" style="color: #FFFFFF; font-size: 11px; font-family: 'Monospace', sans-serif;">${currentBreaks[i].toFixed(1)}</span>`;
+        // Línea inferior de etiquetas corregida sin posición absoluta
+        html += `<div style="display: flex; justify-content: space-between; width: 100%; margin-top: 6px;">`;
+        for (let i = 0; i <= 5; i++) {
+            const val = currentBreaks[i] !== undefined ? currentBreaks[i].toFixed(1) : '';
+            html += `<span style="font-size: 10px; color: #ccc;">${val}</span>`;
         }
-        html += '</div>';
+        html += `</div>`;
 
-        div.innerHTML = html;
-        return div;
-    };
-    legend.addTo(map);
-}
+        container.innerHTML = html;
+    }
 
     // SYNCHRONISATIONSFUNKTIONEN - KARTE ZU LEISTE
     window.resaltarBloqueLegenda = (index) => {
