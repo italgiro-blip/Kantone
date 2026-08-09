@@ -95,19 +95,19 @@ select {
 
 /* --- HORIZONTALE LEGENDE (FARBSKALA-BALKEN) --- */
 .legend-horizontal {
-    background-color: rgba(0, 0, 0, 0.85) !important;
-    padding: 12px 15px !important; 
-    border-radius: 4px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.85) !important;
+    padding: 10px 12px !important; 
+    border-radius: 10px !important;
+    border: 1px solid #ff8c1a !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.8) !important;
+    margin: 25px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    bottom: 30px; 
-    width: 450px !important; /* <--- Modifica este valor si quieres hacerla más larga o corta */
-    max-width: 450px !important; /* <--- Debe coincidir con el width */
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    box-sizing: border-box !important; 
-    overflow: hidden !important; /* Evita que cualquier elemento salga de los márgenes */
+    width: 380px !important;
+    max-width: 380px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
 }
 
 .legend-horizontal div:first-child {
@@ -123,7 +123,7 @@ select {
 
 .legend-container { 
     display: flex !important; 
-    gap: 3px !important; 
+    gap: 4px !important; 
     width: 100% !important; 
     box-sizing: border-box !important;
 }
@@ -134,20 +134,41 @@ select {
     flex-direction: column !important;
     align-items: center !important;
     min-width: 0 !important; 
+    cursor: pointer; 
+    transition: 0.3s ease;
 }
 
 .legend-color {
     width: 100% !important;
-    height: 14px !important;
-    border-radius: 2px;
-    border: 0.5px solid rgba(255,255,255,0.4);
+    height: 12px !important;
+    border-radius: 4px !important;
+    margin-bottom: 4px !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+}
+
+.active-legend { 
+    transform: translateY(-5px) scale(1.05); 
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 8px; 
+    padding: 3px; 
+    box-shadow: 0 0 15px #ff8c1a; 
+}
+
+.tooltip-selected { 
+    background: #ff8c1a !important; 
+    color: #000 !important; 
+    font-weight: 900; 
+    padding: 8px 15px; 
+    border-radius: 5px; 
+    border: 2px solid #fff !important; 
+    font-size: 14px; 
 }
 
 /* Text der numerischen Bereiche */
 .legend-text { 
     color: #FFFFFF; 
     font-size: 11px; 
-    font-family: 'Monospace', sans-serif; /* Estilo técnico */
+    font-family: 'Monospace', sans-serif; 
 }
 
 /* --- METRISCHER MASSSTAB (LEAFLET-MASSSTAB) --- */
