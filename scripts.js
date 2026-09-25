@@ -1,10 +1,18 @@
-document.addEventListener('DOMContentLoaded', () => {
+
+
+    document.addEventListener('DOMContentLoaded', () => {
     // 1. KARTE UND BASISKARTEN
     const baseLayers = {
-        dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'),
+        // REEMPLAZAMOS EL CARTOCDN POR EL DE ESRI DARK (Funciona sin claves y nunca falla):
+        dark: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 16,
+            attribution: 'Tiles © Esri — Esri, DeLorme, NAVTEQ'
+        }),
         streets: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
         satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
     };
+
+
 
     const map = L.map('map', { zoomControl: false, layers: [baseLayers.dark] }).setView([46.8009866002, 8.2297845701], 8);
     
