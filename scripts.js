@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. KARTE UND BASISKARTEN
+    // 1. KARTE UND BASISKARTEN     
     const baseLayers = {
-        dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            subdomains: 'abcd',
-            maxZoom: 20,
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-        }),
+        dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=cb1_4iak_1_24289eb4ef8a24a5a8752e0e', {
+    subdomains: 'abcd',
+    maxZoom: 20,
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+}),
         streets: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; OpenStreetMap contributors'
