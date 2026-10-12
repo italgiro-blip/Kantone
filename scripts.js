@@ -1,33 +1,41 @@
-
-
-    document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     // 1. KARTE UND BASISKARTEN
     const baseLayers = {
-        // REEMPLAZAMOS EL CARTOCDN POR EL DE ESRI DARK (Funciona sin claves y nunca falla):
         dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd',
-    maxZoom: 20,
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-}),
-        streets: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
-        satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
+            subdomains: 'abcd',
+            maxZoom: 20,
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+        }),
+        streets: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }),
+        satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: 'Tiles &copy; Esri'
+        })
     };
 
+    const map = L.map('map', {
+        zoomControl: false,
+        layers: [baseLayers.satellite]
+    }).setView([46.8009866002, 8.2297845701], 8);
 
-
-    const map = L.map('map', { zoomControl: false, layers: [baseLayers.satellite] }).setView([46.8009866002, 8.2297845701], 8);
-    
-    // Barra de escala configurada de forma idéntica
     L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
 
     let geojsonLayer, currentData, currentBreaks = [];
     const colorSchemes = {
-        blues: ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'],
-        reds: ['#fee5d9', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15'],
+        blues:   ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'],
+        reds:    ['#fee5d9', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15'],
         purples: ['#f2f0f7', '#cbc9e2', '#9e9ac8', '#756bb1', '#54278f'],
-        greens: ['#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c']
+        greens:  ['#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c']
     };
-    let currentPalette = colorSchemes.blues;
+
+    // ✅ FIX: la paleta se lee siempre desde el <select>, no desde una variable suelta
+    const getPalette = () => {
+        const key = document.getElementById('paletteSelect')?.value || 'blues';
+        return colorSchemes[key] || colorSchemes.blues;
+    };
 
     const getProp = (p, keys) => {
         const lowerKeys = keys.map(k => k.toLowerCase());
@@ -44,9 +52,23 @@
         if (method === 'equal') {
             return Array.from({ length: 6 }, (_, i) => min + (i * (max - min) / 5));
         } else if (method === 'quartiles') {
-            return [vals[0], vals[Math.floor(vals.length * 0.2)], vals[Math.floor(vals.length * 0.4)], vals[Math.floor(vals.length * 0.6)], vals[Math.floor(vals.length * 0.8)], vals[vals.length - 1]];
+            return [
+                vals[0],
+                vals[Math.floor(vals.length * 0.2)],
+                vals[Math.floor(vals.length * 0.4)],
+                vals[Math.floor(vals.length * 0.6)],
+                vals[Math.floor(vals.length * 0.8)],
+                vals[vals.length - 1]
+            ];
         } else {
-            return [min, vals[Math.floor(vals.length * 0.1)], vals[Math.floor(vals.length * 0.3)], vals[Math.floor(vals.length * 0.6)], vals[Math.floor(vals.length * 0.85)], max];
+            return [
+                min,
+                vals[Math.floor(vals.length * 0.1)],
+                vals[Math.floor(vals.length * 0.3)],
+                vals[Math.floor(vals.length * 0.6)],
+                vals[Math.floor(vals.length * 0.85)],
+                max
+            ];
         }
     }
 
@@ -59,17 +81,25 @@
     function renderMap(data) {
         if (!data) return;
         currentBreaks = computeBreaks(data, document.getElementById('classificationSelect').value);
+
         if (geojsonLayer) map.removeLayer(geojsonLayer);
-        
+
+        const palette = getPalette(); // ✅ FIX: leer paleta una sola vez
+
         geojsonLayer = L.geoJSON(data, {
             style: (f) => ({
-                fillColor: colorSchemes[document.getElementById('paletteSelect').value][getColorIndex(parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0, currentBreaks)],
-                weight: 1.2, color: 'white', fillOpacity: 0.8
+                fillColor: palette[getColorIndex(
+                    parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0,
+                    currentBreaks
+                )],
+                weight: 1.2,
+                color: 'white',
+                fillOpacity: 0.8
             }),
             onEachFeature: (f, layer) => {
                 const n = getProp(f.properties, ['nombre', 'name', 'NAME_1']);
                 const t = parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0;
-                
+
                 layer.bindTooltip(`<b>${n}</b><br>Wert: ${t}`, { sticky: true });
 
                 layer.on({
@@ -89,13 +119,15 @@
                 });
             }
         }).addTo(map);
+
         updateLegend();
     }
 
-    // 4. LEGENDE UND FARBSKALA - REFINIERTE VERSION
+    // 4. LEGENDE UND FARBSKALA
     function updateLegend() {
+        // ✅ FIX: se reutiliza el mismo contenedor sin duplicar controles
         let container = document.querySelector('.legend-horizontal');
-        
+
         if (!container) {
             container = L.DomUtil.create('div', 'legend-horizontal');
             const lControl = L.control({ position: 'bottomright' });
@@ -103,17 +135,18 @@
             lControl.addTo(map);
         }
 
+        const palette = getPalette(); // ✅ FIX: siempre sincronizada con el select
+
         let html = `<div>Farbskala</div>
                     <div class="legend-container">`;
 
         for (let i = 0; i < 5; i++) {
-            const color = currentPalette[i];
             html += `
             <div class="legend-item" id="leg-block-${i}">
-                <div class="legend-color" style="background:${color};"></div>
+                <div class="legend-color" style="background:${palette[i]};"></div>
             </div>`;
         }
-        
+
         html += `</div>`;
 
         html += `<div style="display: flex; justify-content: space-between; width: 100%; margin-top: 6px;">`;
@@ -148,15 +181,21 @@
 
     // 5. LADEN UND SELEKTOREN
     document.getElementById('btnCargarGeoJSON').onclick = () => {
-        fetch('Kantone.geojson').then(r => r.json()).then(data => {
-            currentData = data;
-            renderMap(data);
-            map.fitBounds(geojsonLayer.getBounds(), { padding: [30, 30] });
-            const select = document.getElementById('labelSelect');
-            select.innerHTML = '<option value="">Kanton auswählen...</option>';
-            const nombres = data.features.map(f => getProp(f.properties, ['nombre', 'name', 'NAME_1'])).filter(n => n).sort();
-            nombres.forEach(name => select.add(new Option(name, name)));
-        });
+        fetch('Kantone.geojson')
+            .then(r => r.json())
+            .then(data => {
+                currentData = data;
+                renderMap(data);
+                map.fitBounds(geojsonLayer.getBounds(), { padding: [30, 30] });
+
+                const select = document.getElementById('labelSelect');
+                select.innerHTML = '<option value="">Kanton auswählen...</option>';
+                const nombres = data.features
+                    .map(f => getProp(f.properties, ['nombre', 'name', 'NAME_1']))
+                    .filter(n => n)
+                    .sort();
+                nombres.forEach(name => select.add(new Option(name, name)));
+            });
     };
 
     document.getElementById('labelSelect').onchange = (e) => {
@@ -167,18 +206,18 @@
 
         geojsonLayer.eachLayer(layer => {
             const nombre = getProp(layer.feature.properties, ['nombre', 'name', 'NAME_1']);
-            
+
             if (nombre === sel) {
                 map.fitBounds(layer.getBounds(), { padding: [100, 100], maxZoom: 10 });
-                
+
                 const v = getProp(layer.feature.properties, ['tasa_promedio', 'Tax_rate', 'Wert']) || 0;
-                
+
                 const elName = document.getElementById('detailNAME_1');
                 const elTax = document.getElementById('detailTax_rate');
-                
+
                 if (elName) elName.innerHTML = `<b>Verwaltung:</b> ${sel}`;
                 if (elTax) elTax.innerHTML = `<b>Wert:</b> ${v}`;
-                
+
                 layer.setStyle({ weight: 4, color: '#FFD700', fillOpacity: 0.7 });
                 layer.openTooltip();
             }
@@ -186,10 +225,12 @@
     };
 
     document.getElementById('classificationSelect').onchange = () => renderMap(currentData);
-    document.getElementById('paletteSelect').onchange = (e) => { 
-        currentPalette = colorSchemes[e.target.value]; 
-        renderMap(currentData); 
+
+    // ✅ FIX: ya no se toca currentPalette; updateLegend la lee del select
+    document.getElementById('paletteSelect').onchange = () => {
+        renderMap(currentData);
     };
+
     document.getElementById('baseMapSelect').onchange = (e) => {
         Object.values(baseLayers).forEach(l => map.removeLayer(l));
         baseLayers[e.target.value].addTo(map);
