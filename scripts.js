@@ -14,7 +14,7 @@
 
 
 
-    const map = L.map('map', { zoomControl: false, layers: [baseLayers.dark] }).setView([46.8009866002, 8.2297845701], 8);
+    const map = L.map('map', { zoomControl: false, layers: [baseLayers.satellite] }).setView([46.8009866002, 8.2297845701], 8);
     
     // Barra de escala configurada de forma idéntica
     L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
