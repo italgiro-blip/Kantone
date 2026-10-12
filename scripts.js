@@ -9,10 +9,13 @@
     maxZoom: 20,
     attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
 }),
+        streets: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
+        satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
+    };
 
 
 
-    const map = L.map('map', { zoomControl: false, layers: [baseLayers.satellite] }).setView([46.8009866002, 8.2297845701], 8);
+    const map = L.map('map', { zoomControl: false, layers: [baseLayers.dark] }).setView([46.8009866002, 8.2297845701], 8);
     
     // Barra de escala configurada de forma idéntica
     L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
