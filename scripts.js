@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 1. KARTE UND BASISKARTEN     
     const baseLayers = {
-        dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=cb1_4iak_1_24289eb4ef8a24a5a8752e0e', {
+        
+        dark: L.tileLayer('https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_4iak_1_24289eb4ef8a24a5a8752e0e', {
     subdomains: 'abcd',
     maxZoom: 20,
     attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
