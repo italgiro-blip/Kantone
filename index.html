@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geoviewer | Schweiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== FARBVARIABLEN SCHWEIZ ===== */
+        :root {
+            --ch-red: #FF0000;
+            --ch-red-dark: #b30000;
+            --ch-white: #FFFFFF;
+            --ch-gray: #f0f0f0;
+            --ch-silver: #d9d9d9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body, html {
+            height: 100vh;
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            /* ===== FONDO DE DOS COLORES: BLANCO Y ROJO ===== */
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 45%, var(--ch-red) 55%, var(--ch-red) 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== IMAGEN PNG DE FONDO CON ZOOM + MOVIMIENTO ===== */
+        body::after {
+            content: '';
+            position: absolute;
+            inset: -10%;                         /* margen extra para que no se vean bordes al hacer zoom */
+            background-image: url('img.png');  /* <-- Cambia el nombre si es necesario */
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.18;                       /* Transparencia sutil */
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform, opacity;     /* Mejora el rendimiento */
+            animation: 
+                breatheZoom 12s ease-in-out infinite,
+                driftMove 18s ease-in-out infinite;
+        }
+
+        /* Acercar y alejar (zoom in / zoom out) */
+        @keyframes breatheZoom {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.15); }
+        }
+
+        /* Movimiento suave de lado a lado */
+        @keyframes driftMove {
+            0%   { background-position: 45% 50%; }
+            25%  { background-position: 55% 45%; }
+            50%  { background-position: 50% 55%; }
+            75%  { background-position: 45% 50%; }
+            100% { background-position: 45% 50%; }
+        }
+
+        /* ===== DEKORATIVES HINTERGRUNDMUSTER ===== */
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,0,0,0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Schwebende dekorative Kugeln */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            z-index: 1;
+            animation: float 8s ease-in-out infinite;
+        }
+        .orb-1 { width: 350px; height: 350px; background: var(--ch-red); top: -80px; left: -80px; opacity: 0.2; }
+        .orb-2 { width: 400px; height: 400px; background: var(--ch-white); bottom: -120px; right: -100px; animation-delay: 2s; opacity: 0.5; }
+        .orb-3 { width: 250px; height: 250px; background: var(--ch-red); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 4s; opacity: 0.15; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50%      { transform: translate(30px, -30px) scale(1.1); }
+        }
+
+        /* ===== HEADER MIT LOGOS ===== */
+        .header-logos {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            z-index: 10;
+            animation: fadeDown 1s ease-out;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            width: 150px;
+            max-width: 35vw;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.25)) brightness(1.05);
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .logo:hover {
+            transform: scale(1.08) rotate(-2deg);
+            filter: drop-shadow(0 12px 25px rgba(255,0,0,0.4)) brightness(1.1);
+        }
+
+        /* ===== ZENTRALER INHALT ===== */
+        .main-content {
+            text-align: center;
+            z-index: 5;
+            padding: 20px;
+            animation: fadeUp 1.2s ease-out 0.3s both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Elegante Überschrift – dunkler Text für weißen Hintergrund */
+        .title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: var(--ch-red);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-shadow: 
+                0 0 20px rgba(255,255,255,0.8),
+                0 4px 15px rgba(0,0,0,0.15);
+        }
+        .title span {
+            background: linear-gradient(90deg, var(--ch-red), #ff6666, var(--ch-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .subtitle {
+            font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+            color: #333;
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 45px;
+            text-transform: uppercase;
+        }
+
+        /* ===== HAUPTBUTTON ===== */
+        .btn-sig-container {
+            position: relative;
+            display: inline-block;
+            animation: fadeUp 1.2s ease-out 0.6s both;
+        }
+
+        .btn-sig {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 22px 55px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--ch-white);
+            background: var(--ch-red);
+            border: 3px solid var(--ch-white);
+            border-radius: 60px;
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            box-shadow: 
+                0 10px 30px rgba(255, 0, 0, 0.4),
+                0 0 0 0 rgba(255, 255, 255, 0.7);
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+        }
+
+        /* Schwebender Glanz im Button */
+        .btn-sig::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        .btn-sig:hover::before {
+            left: 100%;
+        }
+
+        .btn-sig:hover {
+            transform: translateY(-4px) scale(1.05);
+            background: var(--ch-white);
+            color: var(--ch-red);
+            border-color: var(--ch-red);
+            box-shadow: 
+                0 15px 40px rgba(255, 0, 0, 0.5),
+                0 0 0 4px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-sig:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .btn-sig svg {
+            width: 22px;
+            height: 22px;
+            transition: transform 0.3s ease;
+        }
+        .btn-sig:hover svg {
+            transform: translateX(5px);
+        }
+
+        /* ===== WELLENANIMATION ===== */
+        .btn-sig-container::before,
+        .btn-sig-container::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 60px;
+            background-color: rgba(255, 0, 0, 0.3);
+            z-index: 1;
+            opacity: 0;
+            animation: pulseWave 3s infinite ease-out;
+        }
+        .btn-sig-container::after {
+            animation-delay: 1.5s;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes pulseWave {
+            0%   { width: 100%; height: 100%; opacity: 0.7; }
+            100% { width: 200%; height: 300%; opacity: 0; }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #333;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 10;
+            animation: fadeUp 1.5s ease-out 1s both;
+        }
+        .footer strong {
+            color: var(--ch-red);
+            font-weight: 700;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .header-logos { padding: 0 20px; top: 15px; }
+            .logo { width: 100px; }
+            .btn-sig { padding: 16px 35px; gap: 8px; }
+            .subtitle { letter-spacing: 1.5px; margin-bottom: 30px; }
+            .orb-1, .orb-2 { width: 200px; height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dekorative Kugeln -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Zentraler Inhalt -->
+    <main class="main-content">
+        <h1 class="title">Geo<span>viewer</span></h1>
+        <p class="subtitle">Entdecken · Erkunden · Lernen</p>
+
+        <div class="btn-sig-container">
+            <a href="maps.html" 
+               class="btn-sig" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                Karte öffnen
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        Projekt <strong>GIS</strong> ·Girotto 2026
+    </footer>
+
+</body>
+</html>
