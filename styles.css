@@ -197,9 +197,6 @@ select:hover, select:focus {
 /* ========================================================= */
 /* ================= 4. IMÁGENES LATERALES ================= */
 /* ========================================================= */
-/* ========================================================= */
-/* ================= 4. IMÁGENES LATERALES ================= */
-/* ========================================================= */
 .side-images {
     position: absolute; top: 90px; right: 20px;
     z-index: 1000; display: flex; flex-direction: column; gap: 15px;
@@ -212,14 +209,14 @@ select:hover, select:focus {
 }
 
 .image-card {
-    width: 120px; /* Un poco más ancho */
-    height: 80px; /* Un poco más alto */
+    width: 120px;
+    height: 80px;
     border-radius: 12px; overflow: hidden;
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 8px 25px rgba(0,0,0,0.5);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     cursor: pointer;
-    background-color: #222; /* Fondo por si la imagen tiene transparencia */
+    background-color: #222;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -228,7 +225,7 @@ select:hover, select:focus {
 .image-card img {
     width: 100%; 
     height: 100%; 
-    object-fit: cover; /* O "contain" si no querés que se recorte nada */
+    object-fit: cover;
     transition: transform 0.4s ease;
 }
 
@@ -401,7 +398,7 @@ select:hover, select:focus {
 }
 
 /* ========================================================= */
-/* ================= 7. ESCALA Y RESPONSIVO ================ */
+/* ================= 7. ESCALA ============================= */
 /* ========================================================= */
 .leaflet-control-scale-line { 
     background: rgba(10, 10, 10, 0.85) !important; 
@@ -415,24 +412,9 @@ select:hover, select:focus {
     border-radius: 0 0 4px 4px;
 }
 
-@media (max-width: 768px) {
-    .controls { 
-        top: auto; bottom: 10px; left: 10px; right: 10px; 
-        width: auto; max-height: 45vh; overflow-y: auto; 
-        border-radius: 16px;
-    }
-    .map-overlay-header, .side-images { display: none; }
-    .legend-horizontal { 
-        margin-bottom: 48vh !important; 
-        width: 90% !important; 
-        left: 5% !important;
-    }
-
- /* ========================================================= */
+/* ========================================================= */
 /* ================= 8. TOOLTIP ÚNICO (HOVER) ============== */
 /* ========================================================= */
-
-/* Quitamos el fondo por defecto y la flechita de Leaflet */
 .custom-tooltip.leaflet-tooltip {
     background: transparent !important;
     border: none !important;
@@ -447,14 +429,14 @@ select:hover, select:focus {
     display: none !important;
 }
 
-/* Cabecera Roja - Aún más chica */
+/* Cabecera Roja - Mínima */
 .custom-tooltip .popup-header {
     background: var(--ch-red);
     color: white;
-    padding: 2px 6px; /* Mínimo espacio */
+    padding: 2px 6px;
     font-family: var(--font-title);
     font-weight: 800;
-    font-size: 8px; /* Letra mini */
+    font-size: 8px;
     text-transform: uppercase;
     letter-spacing: 0.3px;
     border-radius: 12px 12px 0 0; 
@@ -474,20 +456,36 @@ select:hover, select:focus {
     font-family: var(--font-data);
     border-radius: 0 0 12px 12px; 
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    min-width: 40px; /* Muy angosta */
+    min-width: 40px;
 }
 
 .custom-tooltip .popup-label {
-    font-size: 7px; /* "Wert" casi microscópico */
+    font-size: 7px;
     color: #888;
     text-transform: uppercase;
     font-weight: 700;
 }
 
 .custom-tooltip .popup-val {
-    font-size: 11px; /* Número más chico */
+    font-size: 11px;
     font-weight: 800;
     color: var(--ch-blue);
     line-height: 1;
 }
+
+/* ========================================================= */
+/* ================= 9. RESPONSIVO (MOBILE) ================ */
+/* ========================================================= */
+@media (max-width: 768px) {
+    .controls { 
+        top: auto; bottom: 10px; left: 10px; right: 10px; 
+        width: auto; max-height: 45vh; overflow-y: auto; 
+        border-radius: 16px;
+    }
+    .map-overlay-header, .side-images { display: none; }
+    .legend-horizontal { 
+        margin-bottom: 48vh !important; 
+        width: 90% !important; 
+        left: 5% !important;
+    }
 }
