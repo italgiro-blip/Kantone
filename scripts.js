@@ -101,19 +101,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 const n = getProp(f.properties, ['nombre', 'name', 'NAME_1']);
                 const t = parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0;
 
-                // TOOLTIP AVANZADO (HOVER)
+                               // --- ETIQUETA MEJORADA V2.0 ---
                 const tooltipHTML = `
-                    <span class="tooltip-title">${n || 'Unbekannt'}</span>
-                    <div class="tooltip-value">
-                        <span>Wert:</span>
-                        <strong>${t.toFixed(1)}</strong>
+                    <div class="custom-tooltip-inner">
+                        <span class="tooltip-title">${n || 'Unbekannt'}</span>
+                        <div class="tooltip-value">
+                            <span>Wert:</span>
+                            <strong>${t.toFixed(1)}</strong>
+                        </div>
                     </div>
                 `;
+
                 layer.bindTooltip(tooltipHTML, { 
                     sticky: true, 
                     direction: 'top', 
-                    offset: [0, -10],
-                    opacity: 1 
+                    offset: [0, -12], // Un poco más arriba para que no choque con el borde
+                    opacity: 1,       // Evita que Leaflet le baje la opacidad por defecto
+                    className: 'advanced-map-tooltip' // Clase para nuestro CSS
                 });
 
                 // POPUP AVANZADO (CLICK)
