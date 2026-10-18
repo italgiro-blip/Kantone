@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 1. KARTE UND BASISKARTEN     
     const baseLayers = {
-       dark: L.tileLayer('https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_4iak_1_24289eb4ef8a24a5a8752e0e', {
-    subdomains: 'abcd',
-    maxZoom: 20,
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-}),
-
+        dark: L.tileLayer('https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_4iak_1_24289eb4ef8a24a5a8752e0e', {
+            subdomains: 'abcd',
+            maxZoom: 20,
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+        }),
         streets: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; OpenStreetMap'
@@ -98,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 color: 'rgba(255,255,255,0.8)',
                 fillOpacity: 0.75
             }),
-                        onEachFeature: (f, layer) => {
+            onEachFeature: (f, layer) => {
                 const n = getProp(f.properties, ['nombre', 'name', 'NAME_1']);
                 const t = parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0;
 
@@ -126,35 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     click: () => {
                         document.getElementById('detailNAME_1').innerText = n || '--';
                         document.getElementById('detailTax_rate').innerText = t.toFixed(1);
-                    }
-                });
-            }
-
-                // POPUP AVANZADO (CLICK)
-                const popupHTML = `
-                    <div class="popup-header">${n || 'Unbekannt'}</div>
-                    <div class="popup-body">
-                        <span class="popup-label">Wert</span>
-                        <span class="popup-val">${t.toFixed(1)}</span>
-                    </div>
-                `;
-                layer.bindPopup(popupHTML, { className: 'custom-popup' });
-
-                layer.on({
-                    mouseover: (e) => {
-                        const index = getColorIndex(t, currentBreaks);
-                        resaltarBloqueLegenda(index);
-                        layer.setStyle({ weight: 3, color: '#FFD700', fillOpacity: 0.9 });
-                        layer.bringToFront();
-                    },
-                    mouseout: (e) => {
-                        resetBloqueLegenda();
-                        geojsonLayer.resetStyle(e.target);
-                    },
-                    click: () => {
-                        document.getElementById('detailNAME_1').innerText = n || '--';
-                        document.getElementById('detailTax_rate').innerText = t.toFixed(1);
-                        // El popup se abre automáticamente por bindPopup
                     }
                 });
             }
