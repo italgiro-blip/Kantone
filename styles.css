@@ -435,4 +435,80 @@ select:hover, select:focus {
         width: 90% !important; 
         left: 5% !important;
     }
+/* ========================================================= */
+/* ================= ETIQUETA AVANZADA V2.0 ================ */
+/* ========================================================= */
+
+/* Contenedor principal del Tooltip */
+.advanced-map-tooltip {
+    background: rgba(18, 18, 18, 0.92) !important; /* Fondo oscuro casi opaco */
+    backdrop-filter: blur(8px); /* Efecto cristal */
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 0, 0, 0.5) !important; /* Borde rojo suizo */
+    border-radius: 10px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 0, 0, 0.15) !important;
+    padding: 0 !important; /* Quitamos el padding por defecto */
+    overflow: hidden;
+    font-family: 'Roboto Condensed', sans-serif !important;
 }
+
+/* La flechita (tip) apuntando hacia el mapa */
+.advanced-map-tooltip.leaflet-tooltip-top:before {
+    border-top-color: rgba(18, 18, 18, 0.92) !important;
+}
+.advanced-map-tooltip.leaflet-tooltip-bottom:before {
+    border-bottom-color: rgba(18, 18, 18, 0.92) !important;
+}
+.advanced-map-tooltip.leaflet-tooltip-left:before {
+    border-left-color: rgba(18, 18, 18, 0.92) !important;
+}
+.advanced-map-tooltip.leaflet-tooltip-right:before {
+    border-right-color: rgba(18, 18, 18, 0.92) !important;
+}
+
+/* El contenido interior */
+.leaflet-tooltip-content {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.custom-tooltip-inner {
+    padding: 12px 16px;
+    min-width: 130px;
+}
+
+/* Título (Nombre del Cantón) */
+.tooltip-title {
+    display: block;
+    font-family: 'Montserrat', sans-serif; /* Fuente de títulos */
+    font-size: 13px;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+/* Contenedor del valor */
+.tooltip-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #aaaaaa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* El número destacado */
+.tooltip-value strong {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FF0000; /* Rojo suizo */
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+    line-height: 1;
+    font-family: 'Montserrat', sans-serif;
+}
+    }
