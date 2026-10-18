@@ -97,28 +97,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 color: 'rgba(255,255,255,0.8)',
                 fillOpacity: 0.75
             }),
-            onEachFeature: (f, layer) => {
+                        onEachFeature: (f, layer) => {
                 const n = getProp(f.properties, ['nombre', 'name', 'NAME_1']);
                 const t = parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0;
 
-                               // --- ETIQUETA MEJORADA V2.0 ---
-                const tooltipHTML = `
-                    <div class="custom-tooltip-inner">
-                        <span class="tooltip-title">${n || 'Unbekannt'}</span>
-                        <div class="tooltip-value">
-                            <span>Wert:</span>
-                            <strong>${t.toFixed(1)}</strong>
-                        </div>
+                // --- SOLO POPUP (AL HACER CLIC) ---
+                const popupHTML = `
+                    <div class="popup-header">${n || 'Unbekannt'}</div>
+                    <div class="popup-body">
+                        <span class="popup-label">Wert</span>
+                        <span class="popup-val">${t.toFixed(1)}</span>
                     </div>
                 `;
+                layer.bindPopup(popupHTML, { className: 'custom-popup' });
 
-                layer.bindTooltip(tooltipHTML, { 
-                    sticky: true, 
-                    direction: 'top', 
-                    offset: [0, -12], // Un poco más arriba para que no choque con el borde
-                    opacity: 1,       // Evita que Leaflet le baje la opacidad por defecto
-                    className: 'advanced-map-tooltip' // Clase para nuestro CSS
+                layer.on({
+                    mouseover: (e) => {
+                        const index = getColorIndex(t, currentBreaks);
+                        resaltarBloqueLegenda(index);
+                        layer.setStyle({ weight: 3, color: '#FFD700', fillOpacity: 0.9 });
+                        layer.bringToFront();
+                    },
+                    mouseout: (e) => {
+                        resetBloqueLegenda();
+                        geojsonLayer.resetStyle(e.target);
+                    },
+                    click: () => {
+                        document.getElementById('detailNAME_1').innerText = n || '--';
+                        document.getElementById('detailTax_rate').innerText = t.toFixed(1);
+                    }
                 });
+            }
 
                 // POPUP AVANZADO (CLICK)
                 const popupHTML = `
