@@ -379,6 +379,9 @@ select:hover, select:focus {
 /* ========================================================= */
 /* ================= 7. POPUP (CLICK) ====================== */
 /* ========================================================= */
+/* ========================================================= */
+/* ================= 7. POPUP (CLICK) ====================== */
+/* ========================================================= */
 .custom-popup .leaflet-popup-content-wrapper {
     background: #ffffff;
     border-radius: 12px;
@@ -386,10 +389,12 @@ select:hover, select:focus {
     padding: 0;
     overflow: hidden;
 }
+
 .custom-popup .leaflet-popup-content {
     margin: 0;
     min-width: 180px;
 }
+
 .popup-header {
     background: var(--ch-red);
     color: white;
@@ -399,7 +404,11 @@ select:hover, select:focus {
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
 .popup-body {
     padding: 15px;
     display: flex;
@@ -407,18 +416,46 @@ select:hover, select:focus {
     align-items: center;
     font-family: var(--font-data);
 }
+
 .popup-label {
     font-size: 13px;
     color: #666;
     text-transform: uppercase;
+    font-weight: 700;
 }
+
 .popup-val {
     font-size: 22px;
     font-weight: 700;
     color: var(--ch-blue);
 }
+
 .custom-popup .leaflet-popup-tip {
     background: #ffffff;
+}
+
+/* --- ESTILO PARA LA "X" DE CERRAR --- */
+.custom-popup .leaflet-popup-close-button {
+    position: absolute;
+    top: 8px !important;
+    right: 8px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.custom-popup .leaflet-popup-close-button:hover {
+    color: #ffffff !important;
+    background: rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
 }
 
 /* ========================================================= */
