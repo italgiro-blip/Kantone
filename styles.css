@@ -197,18 +197,18 @@ select:hover, select:focus {
 /* ========================================================= */
 /* ================= 4. IMÁGENES LATERALES ================= */
 /* ========================================================= */
+/* ========================================================= */
+/* ================= 4. IMÁGENES LATERALES ================= */
+/* ========================================================= */
 .side-images {
-    position: absolute; top: 90px; right: 20px;
-    z-index: 1000; display: flex; flex-direction: column; gap: 15px;
+    position: absolute; 
+    top: 90px; 
+    right: 20px;
+    z-index: 1000; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px;
     animation: slideLeft 0.8s ease-out 0.4s both;
-}
-
-.side-images .image-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
 }
 
 @keyframes slideLeft {
@@ -217,36 +217,38 @@ select:hover, select:focus {
 }
 
 .image-card {
-    width: 130px;         /* Un poco más anchas para que resalten */
-    height: 90px;         /* Un poco más altas */
-    flex-shrink: 0;       /* OBLIGATORIO: evita que la de abajo se encoja */
+    width: 140px;         /* Un poco más anchas para resaltar */
+    height: 100px;        /* Proporción ideal para banderas y escudos */
+    flex-shrink: 0;       /* Evita que se aplasten o se encojan */
     border-radius: 12px; 
     overflow: hidden;
-    border: 2px solid rgba(255,255,255,0.15); /* Un borde un poco más visible */
-    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    border: 2px solid rgba(255, 255, 255, 0.15); 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     cursor: pointer;
-    background-color: #222;
+    background-color: #1a1a1a; /* Fondo oscuro por si la imagen no llena todo */
 }
 
 .image-card img {
     width: 100%; 
     height: 100%; 
-    object-fit: cover;    /* Llena todo el recuadro sin deformarse */
-    object-position: center; /* Centra la imagen */
+    object-fit: contain;  /* Muestra la imagen completa sin recortes bruscos */
+    padding: 5px;         /* Un pequeño margen interno para que respire */
+    box-sizing: border-box;
     display: block;
     transition: transform 0.4s ease;
 }
+
+/* Efectos Hover (Al pasar el mouse) */
 .image-card:hover {
     border-color: var(--ch-red);
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 12px 30px rgba(255, 0, 0, 0.2);
+    box-shadow: 0 12px 30px rgba(255, 0, 0, 0.3);
 }
+
 .image-card:hover img {
-    transform: scale(1.1);
+    transform: scale(1.08); /* Zoom sutil a la imagen */
 }
-
-
 
 /* ========================================================= */
 /* ================= 5. LEYENDA PROFESIONAL ================ */
