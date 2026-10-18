@@ -1,0 +1,438 @@
+/* ========================================================= */
+/* ================= 1. RESET Y VARIABLES ================== */
+/* ========================================================= */
+:root {
+    --ch-red: #FF0000;
+    --ch-red-dark: #b30000;
+    --ch-dark: rgba(18, 18, 18, 0.85);
+    --ch-glass: rgba(25, 25, 25, 0.75);
+    --ch-border: rgba(255, 255, 255, 0.1);
+    --ch-text: #D9D9D9;
+    --ch-blue: #2A3180;
+    --font-title: 'Montserrat', sans-serif;
+    --font-data: 'Roboto Condensed', sans-serif;
+}
+
+body, html { 
+    margin: 0; padding: 0; 
+    height: 100vh; width: 100vw; 
+    font-family: var(--font-data); 
+    background: #111; 
+    overflow: hidden; 
+}
+
+#map { 
+    position: absolute; top: 0; bottom: 0; left: 0; right: 0; 
+    z-index: 0; 
+    background: #1a1a1a;
+}
+
+/* ========================================================= */
+/* ================= 2. HEADER FLOTANTE ==================== */
+/* ========================================================= */
+.map-overlay-header { 
+    position: absolute; top: 0; width: 100%; 
+    z-index: 1000; display: flex; justify-content: center; 
+    pointer-events: none; 
+    animation: fadeDown 0.8s ease-out;
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header-content { 
+    background: var(--ch-dark);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 12px 30px; 
+    border-radius: 0 0 20px 20px; 
+    border: 1px solid var(--ch-border);
+    border-top: none;
+    border-bottom: 3px solid var(--ch-red); 
+    display: flex; align-items: center; gap: 15px;
+    pointer-events: auto; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.map-logo { 
+    height: 35px; width: auto; 
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+}
+
+.header-text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#mainTitle { 
+    margin: 0; font-family: var(--font-title); font-size: 18px; 
+    color: #fff; text-transform: uppercase; letter-spacing: 2px; font-weight: 800;
+}
+
+.version-badge {
+    background: var(--ch-red);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    font-family: var(--font-title);
+}
+
+/* ========================================================= */
+/* ================= 3. PANEL DE CONTROL =================== */
+/* ========================================================= */
+.controls { 
+    position: absolute; top: 90px; left: 20px; 
+    z-index: 1000; 
+    background: var(--ch-glass);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 22px; width: 250px; 
+    border-radius: 16px; 
+    border: 1px solid var(--ch-border); 
+    border-top: 2px solid var(--ch-red);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    color: white; 
+    animation: slideRight 0.8s ease-out 0.2s both;
+}
+
+@keyframes slideRight {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.panel-header h3 {
+    margin: 0; font-family: var(--font-title); font-size: 12px; 
+    letter-spacing: 1.5px; color: #fff; font-weight: 800;
+}
+
+.status-dot {
+    width: 8px; height: 8px; background: #00ff00; border-radius: 50%;
+    box-shadow: 0 0 10px #00ff00;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+    70% { box-shadow: 0 0 0 6px rgba(0, 255, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+}
+
+.map-button { 
+    width: 100%; background: var(--ch-red); color: white; 
+    border: none; padding: 12px; border-radius: 8px; 
+    font-family: var(--font-title); font-weight: 800; font-size: 12px;
+    cursor: pointer; transition: all 0.3s ease; 
+    text-transform: uppercase; letter-spacing: 1px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+}
+
+.map-button:hover { 
+    background: var(--ch-red-dark); 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.5);
+}
+
+.separator { height: 1px; background: rgba(255,255,255,0.1); margin: 18px 0; }
+
+.control-group {
+    display: flex; flex-direction: column; gap: 14px;
+}
+
+label { 
+    font-size: 10px; color: #aaa; display: flex; 
+    flex-direction: column; gap: 6px; 
+    font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+}
+
+select { 
+    background: rgba(0,0,0,0.4); color: #fff; border: 1px solid rgba(255,255,255,0.15); 
+    padding: 10px; border-radius: 6px; cursor: pointer;
+    font-family: var(--font-data); font-size: 13px;
+    transition: border 0.3s ease;
+    outline: none;
+}
+
+select:hover, select:focus {
+    border-color: var(--ch-red);
+}
+
+.info-card { 
+    margin-top: 20px; padding: 15px; 
+    background: rgba(42, 49, 128, 0.15); 
+    border: 1px solid rgba(42, 49, 128, 0.3);
+    border-left: 4px solid var(--ch-red); border-radius: 8px;
+}
+
+.info-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+}
+.info-row:last-child { margin-bottom: 0; }
+
+.info-label {
+    font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 1px;
+}
+.info-value {
+    font-weight: 700; font-size: 14px; color: #fff;
+    font-family: var(--font-title);
+}
+.info-value.highlight {
+    color: var(--ch-red); font-size: 18px;
+}
+
+/* ========================================================= */
+/* ================= 4. IMÁGENES LATERALES ================= */
+/* ========================================================= */
+.side-images {
+    position: absolute; top: 90px; right: 20px;
+    z-index: 1000; display: flex; flex-direction: column; gap: 15px;
+    animation: slideLeft 0.8s ease-out 0.4s both;
+}
+
+@keyframes slideLeft {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.image-card {
+    width: 100px; height: 70px;
+    border-radius: 12px; overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+}
+
+.image-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.image-card:hover {
+    border-color: var(--ch-red);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(255, 0, 0, 0.2);
+}
+.image-card:hover img {
+    transform: scale(1.1);
+}
+
+/* ========================================================= */
+/* ================= 5. LEYENDA PROFESIONAL ================ */
+/* ========================================================= */
+.legend-horizontal {
+    background: var(--ch-glass) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 15px 20px !important; 
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    bottom: 30px; 
+    width: 360px !important; 
+    border: 1px solid var(--ch-border) !important;
+    border-bottom: 3px solid var(--ch-red) !important;
+    box-sizing: border-box !important; 
+}
+
+.legend-title {
+    font-size: 11px !important;
+    font-family: var(--font-title) !important;
+    width: 100% !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    color: #fff !important;
+    margin-bottom: 10px !important;
+    font-weight: 800;
+    text-align: center;
+}
+
+.legend-container { 
+    display: flex !important; 
+    gap: 4px !important; 
+    width: 100% !important; 
+    box-sizing: border-box !important;
+}
+
+.legend-item { 
+    flex: 1 !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    min-width: 0 !important; 
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.legend-item:hover {
+    transform: translateY(-3px);
+}
+
+.legend-color {
+    width: 100% !important;
+    height: 16px !important;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+}
+
+.legend-labels {
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    margin-top: 8px;
+}
+
+.legend-labels span {
+    font-size: 10px; 
+    color: #aaa; 
+    font-weight: 700;
+    font-family: var(--font-data);
+}
+
+/* ========================================================= */
+/* ================= 6. TOOLTIPS Y POPUPS ================== */
+/* ========================================================= */
+/* Tooltip (Hover) - Estilo Cristal Oscuro */
+.leaflet-tooltip {
+    background: rgba(20, 20, 20, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 0, 0, 0.4) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.2) !important;
+    color: #fff !important;
+    padding: 0 !important; 
+    overflow: hidden; 
+    font-family: var(--font-data) !important;
+    transition: all 0.2s ease-out;
+}
+
+.leaflet-tooltip-top:before { border-top-color: rgba(20, 20, 20, 0.95) !important; }
+.leaflet-tooltip-bottom:before { border-bottom-color: rgba(20, 20, 20, 0.95) !important; }
+.leaflet-tooltip-left:before { border-left-color: rgba(20, 20, 20, 0.95) !important; }
+.leaflet-tooltip-right:before { border-right-color: rgba(20, 20, 20, 0.95) !important; }
+
+.leaflet-tooltip-content {
+    margin: 0 !important;
+    padding: 12px 16px !important;
+    min-width: 130px;
+}
+
+.tooltip-title {
+    display: block;
+    font-family: var(--font-title);
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.tooltip-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tooltip-value strong {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ch-red);
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    line-height: 1;
+}
+
+/* Popup (Click) - Estilo Tarjeta Blanca */
+.custom-popup .leaflet-popup-content-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    padding: 0;
+    overflow: hidden;
+}
+.custom-popup .leaflet-popup-content {
+    margin: 0;
+    min-width: 180px;
+}
+.popup-header {
+    background: var(--ch-red);
+    color: white;
+    padding: 12px 15px;
+    font-family: var(--font-title);
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.popup-body {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-data);
+}
+.popup-label {
+    font-size: 13px;
+    color: #666;
+    text-transform: uppercase;
+}
+.popup-val {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ch-blue);
+}
+.custom-popup .leaflet-popup-tip {
+    background: #ffffff;
+}
+
+/* ========================================================= */
+/* ================= 7. ESCALA Y RESPONSIVO ================ */
+/* ========================================================= */
+.leaflet-control-scale-line { 
+    background: rgba(10, 10, 10, 0.85) !important; 
+    color: #FFFFFF !important; 
+    border: 1px solid var(--ch-red) !important; 
+    border-top: none !important;
+    font-size: 10px !important;
+    font-weight: bold !important;
+    padding: 2px 8px !important;
+    font-family: var(--font-data) !important;
+    border-radius: 0 0 4px 4px;
+}
+
+@media (max-width: 768px) {
+    .controls { 
+        top: auto; bottom: 10px; left: 10px; right: 10px; 
+        width: auto; max-height: 45vh; overflow-y: auto; 
+        border-radius: 16px;
+    }
+    .map-overlay-header, .side-images { display: none; }
+    .legend-horizontal { 
+        margin-bottom: 48vh !important; 
+        width: 90% !important; 
+        left: 5% !important;
+    }
+}

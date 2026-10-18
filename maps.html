@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTERAKTIVE KANTONSKARTE DER SCHWEIZ | v2.0 Pro</title>
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- CSS Propio -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- HEADER FLOTANTE -->
+    <header class="map-overlay-header">
+        <div class="header-content">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_Switzerland_%28Pantone%29.svg/960px-Flag_of_Switzerland_%28Pantone%29.svg.png" alt="Logotipo Suiza" class="map-logo">
+            <div class="header-text">
+                <h1 id="mainTitle">KANTONSKARTE</h1>
+                <span class="version-badge">v2.0 PRO</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- PANEL DE CONTROL IZQUIERDO -->
+    <aside class="controls">
+        <div class="panel-header">
+            <h3>VISUELLE PARAMETER</h3>
+            <div class="status-dot"></div>
+        </div>
+        
+        <button type="button" id="btnCargarGeoJSON" class="map-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            LAYER IMPORTIEREN
+        </button>
+        
+        <div class="separator"></div>
+
+        <div class="control-group">
+            <label>HINTERGRUNDKARTE
+                <select id="baseMapSelect">
+                    <option value="satellite">Satellit (Esri)</option>
+                    <option value="streets">OpenStreetMap</option>
+                    <option value="dark">Carto Voyager</option>
+                </select>
+            </label>
+
+            <label>STATISTISCHE METHODE
+                <select id="classificationSelect">
+                    <option value="jenks">Gruppen optimieren (Jenks)</option>
+                    <option value="equal">Gleiche Intervalle (Uniform)</option>
+                    <option value="quartiles">Frequenzverteilung (Quartile)</option>
+                </select>
+            </label>
+
+            <label>FARBSCHEMA
+                <select id="paletteSelect">
+                    <option value="blues" selected>Blaustufen</option>
+                    <option value="reds">Rotstufen</option>
+                    <option value="purples">Lilastufen</option>
+                    <option value="greens">Grünstufen</option>
+                </select>
+            </label>
+
+            <label>VERWALTUNGSEINHEIT
+                <select id="labelSelect">
+                    <option value="">Daten werden geladen...</option>
+                </select>
+            </label>
+        </div>
+
+        <!-- TARJETA DE INFORMACIÓN -->
+        <div id="infoBox" class="info-card">
+            <div class="info-row">
+                <span class="info-label">Verwaltung</span>
+                <span id="detailNAME_1" class="info-value">--</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Wert</span>
+                <span id="detailTax_rate" class="info-value highlight">--</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- IMÁGENES LATERALES -->
+    <div class="side-images">
+        <div class="image-card">
+            <img src="https://www.flagsonline.it/uploads/2016-6-6/315-205/switzerland.jpg" alt="Bandera Suiza">
+        </div>
+        <div class="image-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0_mJ3ShroC0D0jEkHipxn41XQH5HCeEV4k7svOQo8Cw&s=10" alt="Mapa Suizo">
+        </div>
+    </div>
+
+    <!-- MAPA -->
+    <div id="map"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
