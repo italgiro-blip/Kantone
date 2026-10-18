@@ -203,6 +203,14 @@ select:hover, select:focus {
     animation: slideLeft 0.8s ease-out 0.4s both;
 }
 
+.side-images .image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
 @keyframes slideLeft {
     from { opacity: 0; transform: translateX(30px); }
     to { opacity: 1; transform: translateX(0); }
