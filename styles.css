@@ -413,7 +413,7 @@ select:hover, select:focus {
         left: 5% !important;
     }
 
-  /* ========================================================= */
+ /* ========================================================= */
 /* ================= 8. TOOLTIP ÚNICO (HOVER) ============== */
 /* ========================================================= */
 
@@ -432,45 +432,45 @@ select:hover, select:focus {
     display: none !important;
 }
 
-/* Cabecera Roja - Mínima expresión */
+/* Cabecera Roja - Aún más chica */
 .custom-tooltip .popup-header {
     background: var(--ch-red);
     color: white;
-    padding: 3px 8px; /* Súper fino */
+    padding: 2px 6px; /* Mínimo espacio */
     font-family: var(--font-title);
     font-weight: 800;
-    font-size: 9px; /* Letra minúscula */
+    font-size: 8px; /* Letra mini */
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-radius: 15px 15px 0 0; /* Redondeado */
+    letter-spacing: 0.3px;
+    border-radius: 12px 12px 0 0; 
     text-align: center;
-    white-space: nowrap; /* Evita que el texto se rompa en dos líneas */
+    white-space: nowrap; 
 }
 
-/* Cuerpo Blanco - Compacto */
+/* Cuerpo Blanco - Súper compacto */
 .custom-tooltip .popup-body {
     background: #ffffff;
     color: #333;
-    padding: 3px 8px;
+    padding: 2px 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 4px; /* Espacio mínimo entre texto y número */
+    gap: 3px; 
     font-family: var(--font-data);
-    border-radius: 0 0 15px 15px; /* Redondeado */
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    min-width: 60px; /* Mucho más angosta */
+    border-radius: 0 0 12px 12px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    min-width: 40px; /* Muy angosta */
 }
 
 .custom-tooltip .popup-label {
-    font-size: 8px; /* "Wert" casi invisible */
+    font-size: 7px; /* "Wert" casi microscópico */
     color: #888;
     text-transform: uppercase;
     font-weight: 700;
 }
 
 .custom-tooltip .popup-val {
-    font-size: 13px; /* Número chico */
+    font-size: 11px; /* Número más chico */
     font-weight: 800;
     color: var(--ch-blue);
     line-height: 1;
