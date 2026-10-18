@@ -241,6 +241,11 @@ select:hover, select:focus {
     transform: scale(1.1);
 }
 
+@media (max-height: 700px) {
+    .side-images { gap: 10px; }
+    .image-card { width: 100px; height: 65px; }
+}
+
 /* ========================================================= */
 /* ================= 5. LEYENDA PROFESIONAL ================ */
 /* ========================================================= */
