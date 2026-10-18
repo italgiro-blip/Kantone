@@ -101,16 +101,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 const n = getProp(f.properties, ['nombre', 'name', 'NAME_1']);
                 const t = parseFloat(getProp(f.properties, ['tasa_promedio', 'Tax_rate', 'Wert'])) || 0;
 
-                // --- SOLO POPUP (AL HACER CLIC) ---
-                const popupHTML = `
+                // Armamos la tarjeta (header rojo + body blanco)
+                const labelHTML = `
                     <div class="popup-header">${n || 'Unbekannt'}</div>
                     <div class="popup-body">
                         <span class="popup-label">Wert</span>
                         <span class="popup-val">${t.toFixed(1)}</span>
                     </div>
                 `;
-                layer.bindPopup(popupHTML, { className: 'custom-popup' });
 
+                // SOLO TOOLTIP (HOVER) - Sin Popup para que no se duplique
+                layer.bindTooltip(labelHTML, { 
+                    className: 'custom-tooltip', 
+                    sticky: true, 
+                    direction: 'top', 
+                    offset: [0, -10],
+                    opacity: 1
+                });
+
+                // Eventos de mouse
                 layer.on({
                     mouseover: (e) => {
                         const index = getColorIndex(t, currentBreaks);
@@ -123,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         geojsonLayer.resetStyle(e.target);
                     },
                     click: () => {
+                        // Solo actualizamos el panel izquierdo
                         document.getElementById('detailNAME_1').innerText = n || '--';
                         document.getElementById('detailTax_rate').innerText = t.toFixed(1);
                     }
@@ -243,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('detailTax_rate').innerText = parseFloat(v).toFixed(1);
 
                 layer.setStyle({ weight: 3, color: '#FFD700', fillOpacity: 0.9 });
-                layer.openPopup(); // Abre el popup en lugar del tooltip
+                layer.openTooltip(); // <--- Abre la etiqueta flotante
             }
         });
     };
