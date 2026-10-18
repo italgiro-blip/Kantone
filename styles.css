@@ -429,48 +429,48 @@ select:hover, select:focus {
     display: none !important;
 }
 
-/* Cabecera Roja - Mínima */
+/* Cabecera Roja - Legible */
 .custom-tooltip .popup-header {
     background: var(--ch-red);
     color: white;
-    padding: 2px 6px;
+    padding: 4px 10px;
     font-family: var(--font-title);
     font-weight: 800;
-    font-size: 8px;
+    font-size: 11px;          /* antes: 8px */
     text-transform: uppercase;
-    letter-spacing: 0.3px;
-    border-radius: 12px 12px 0 0; 
+    letter-spacing: 0.5px;
+    border-radius: 12px 12px 0 0;
     text-align: center;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
-/* Cuerpo Blanco - Súper compacto */
+/* Cuerpo Blanco - Compacto pero legible */
 .custom-tooltip .popup-body {
     background: #ffffff;
     color: #333;
-    padding: 2px 6px;
+    padding: 4px 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3px; 
+    gap: 5px;
     font-family: var(--font-data);
-    border-radius: 0 0 12px 12px; 
+    border-radius: 0 0 12px 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    min-width: 40px;
+    min-width: 55px;
 }
 
 .custom-tooltip .popup-label {
-    font-size: 7px;
+    font-size: 10px;          /* antes: 7px */
     color: #888;
     text-transform: uppercase;
     font-weight: 700;
 }
 
 .custom-tooltip .popup-val {
-    font-size: 11px;
+    font-size: 14px;          /* antes: 11px */
     font-weight: 800;
     color: var(--ch-blue);
-    line-height: 1;
+    line-height: 1.1;
 }
 
 /* ========================================================= */
