@@ -363,25 +363,25 @@
     </footer>
 
     <!-- SCRIPT DE CONTROL -->
-    <script>
-        const boton = document.getElementById('video-btn');
-        const video = document.getElementById('mi-video');
+  <script>
+    const boton = document.getElementById('video-btn');
+    const video = document.getElementById('mi-video');
 
-        boton.addEventListener('click', () => {
-            if (video.style.display === 'none') {
-                video.style.display = 'block';
-            }
-
-            if (video.paused) {
-                video.play();
-                boton.classList.add('girando');
-                boton.querySelector('.icono').textContent = '⏸';
-            } else {
-                video.pause();
-                boton.classList.remove('girando');
-                boton.querySelector('.icono').textContent = '▶';
-            }
-        });
-    </script>
+    boton.addEventListener('click', () => {
+        // Si el video está oculto, lo mostramos y reproducimos
+        if (video.style.display === 'none' || video.style.display === '') {
+            video.style.display = 'block';
+            video.play();
+            boton.classList.add('girando');
+            boton.querySelector('.icono').textContent = '⏸';
+        } else {
+            // Si ya está visible, lo pausamos Y lo ocultamos (cerramos)
+            video.pause();
+            video.style.display = 'none';
+            boton.classList.remove('girando');
+            boton.querySelector('.icono').textContent = '▶';
+        }
+    });
+</script>
 </body>
 </html>
